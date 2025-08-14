@@ -1,0 +1,13 @@
+def recommend_subjects(background):
+    recommendations = []
+    
+    if 'программирование' in background.lower():
+        recommendations.append('Продвинутые алгоритмы машинного обучения')
+    
+    if 'бизнес' in background.lower():
+        recommendations.append('Управление AI-продуктами')
+    
+    if 'математика' in background.lower():
+        recommendations.append('Теоретические основы глубокого обучения')
+    
+    return recommendations if recommendations else ['Введение в ИИ', 'Основы data science']
