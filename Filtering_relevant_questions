@@ -1,0 +1,4 @@
+def is_relevant(question):
+    keywords = ['программа', 'курс', 'дисциплина', 'кредит', 'учебный план', 
+                'расписание', 'преподаватель', 'магистратура', 'обучение']
+    return any(keyword in question.lower() for keyword in keywords)
