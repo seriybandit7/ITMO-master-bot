@@ -1,0 +1,30 @@
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+def parse_program(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    
+    # Извлечение основной информации
+    program_data = {
+        'title': soup.find('h1').text.strip(),
+        'description': soup.find('div', class_='program-description').text.strip(),
+        'subjects': []
+    }
+    
+    # Парсинг учебного плана
+    subjects_section = soup.find('div', class_='subjects-list')
+    for subject in subjects_section.find_all('div', class_='subject-item'):
+        program_data['subjects'].append({
+            'name': subject.find('h3').text.strip(),
+            'type': subject.find('span', class_='subject-type').text.strip(),
+            'credits': subject.find('span', class_='subject-credits').text.strip(),
+            'description': subject.find('div', class_='subject-description').text.strip()
+        })
+    
+    return program_data
+
+# Парсинг обеих программ
+ai_program = parse_program('https://abit.itmo.ru/program/master/ai')
+ai_product_program = parse_program('https://abit.itmo.ru/program/master/ai_product')
